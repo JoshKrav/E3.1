@@ -4,16 +4,13 @@ import { renderTemplate } from "./view";
 
 export const getHome = async (req: IncomingMessage, res: ServerResponse) => {
     res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Content-Type", "text/html");
     res.end(
-        JSON.stringify(
-            {
-                message: "Hello from the Pokemon Server!",
-            },
-            null,
-            2,
-        ),
-    );
+        await renderTemplate("src/page.hbs", {
+          heading: "Homepage!",
+          image: "../images/803.png",
+        })
+      );
 };
 
 export const getAllPokemon = async (
@@ -38,10 +35,14 @@ export const getAllPokemon = async (
     }
 
     res.statusCode = 200;
-    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Content-Type", "text/html");
     res.end(
-        JSON.stringify({ message: "All Pokemon", payload: pokemon }, null, 2),
-    );
+        await renderTemplate("src/page.hbs", {
+          heading: "All Pokemon!",
+          image: "../images/803.png",
+          pokemon: pokemon,
+        })
+      );
 };
 
 export const getOnePokemon = async (
